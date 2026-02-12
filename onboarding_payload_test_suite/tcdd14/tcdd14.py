@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2023 Project CHIP Authors
+# Copyright (c) 2023-2026 Project CHIP Authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,8 +44,7 @@ class TCDD14(TestCase, UserPromptSupport):
     def create_test_steps(self) -> None:
         self.test_steps = [
             TestStep(
-                "Step1: Scan the DUT’s QR code using a QR code\
-                 reader and verify the number of delimiters."
+                "Step1: Scan larger QR code that will support the commissioning of all the DUTs in the packaging using the QR code scanner"
             ),
         ]
 
@@ -81,7 +80,23 @@ class TCDD14(TestCase, UserPromptSupport):
 
     def _create_qr_code_payload_prompt(self) -> PromptRequest:
         text_input_param = {
-            "prompt": "Please enter the concatenated QR code payload",
+            "prompt": """Please enter the concatenated QR code payload.
+
+            Note: The reference platform(e.g., all-clusters-app) advertises only a single QR code, which is not sufficient to validate 
+            concatenated QR code onboarding payloads. Therefore, the QR code payloads must be manually generated using chip-tool. 
+            
+            Use the following commands to generate individual QR codes:
+            
+            ./chip-tool payload generate-qrcode --discriminator 3840 --setup-pin-code 20202021 --vendor-id 65521 --product-id 32768
+            ./chip-tool payload generate-qrcode --discriminator 3841 --setup-pin-code 20202021 --vendor-id 65522 --product-id 32770
+            
+            Save the generated QR codes for future validation.
+            
+            Example QR code payload: MT:Y.K90-Q000KA0648G00
+
+            The above steps are required only for the reference platform. Please skip these when validating with real devices and 
+            directly enter the concatenated QR code payload.
+            """,
             "placeholder_text": "MT:YNJV75HZ00KA0648G00*W0GU2OTB00KA0648G00",
         }
         prompt_request = TextInputPromptRequest(
