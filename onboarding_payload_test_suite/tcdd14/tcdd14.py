@@ -90,9 +90,9 @@ class TCDD14(TestCase, UserPromptSupport):
             ./chip-tool payload generate-qrcode --discriminator 3840 --setup-pin-code 20202021 --vendor-id 65521 --product-id 32768
             ./chip-tool payload generate-qrcode --discriminator 3841 --setup-pin-code 20202021 --vendor-id 65522 --product-id 32770
             
-            Save the generated QR codes for future validation.
+            Save the generated QR codes. To create the concatenated payload, join the individual payloads with a '*' delimiter, removing the 'MT:' prefix from the second and any subsequent payloads.
             
-            Example QR code payload: MT:Y.K90-Q000KA0648G00
+            Example of a concatenated payload: MT:YNJV75HZ00KA0648G00*W0GU2OTB00KA0648G00
 
             The above steps are required only for the reference platform. Please skip these when validating with real devices and 
             directly enter the concatenated QR code payload.
